@@ -9,6 +9,7 @@ import UIKit
 
 final class DetailViewController: UIViewController {
     
+    //Core data variable for helps us the check data
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     private var models = [FavoritesItems]()
     var personal = PersonalViewController()
@@ -32,6 +33,7 @@ final class DetailViewController: UIViewController {
         
         //MARK: - Button Favorite
         //Button for add datas to core data
+        //We customize Button here
         let button = UIButton(frame: CGRect(x: 100,y: 700,width: 200,height: 60))
         button.setTitle("Add to Favorites", for: .normal)
         button.setTitleColor(.white, for: .normal)
@@ -46,7 +48,7 @@ final class DetailViewController: UIViewController {
     //Button Action when you clicked button its will be active
     @objc
     func buttonAction() {
-        
+        //Triggers the core data functions
         createItem()
         getAllItems()
         
@@ -64,6 +66,7 @@ final class DetailViewController: UIViewController {
     
     //MARK: - Core Data
     
+    //This functions create item in core data
     func createItem(){
         let newItem = FavoritesItems(context: context)
         newItem.artist = detailView.artistName
@@ -89,6 +92,8 @@ final class DetailViewController: UIViewController {
             
         }
     }
+    
+    //this function call the items in core data
     func getAllItems () {
         
         do {
@@ -104,6 +109,7 @@ final class DetailViewController: UIViewController {
         
     }
     
+    //this function delete the items in core data
     func deleteItem(item: FavoritesItems) {
         context.delete(item)
         
@@ -117,6 +123,7 @@ final class DetailViewController: UIViewController {
         }
     }
     
+    //this function save the items in core data
     func updateItem(item: FavoritesItems, newName: String) {
         item.track = newName
         

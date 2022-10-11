@@ -8,6 +8,9 @@
 import UIKit
 
 final class MovieDetailView: UIView {
+    
+    //MARK: - Variables
+    //This variables for show the item specialetes in selected item screen
     var releaseDate: String? {
         didSet {
             releaseDateKeyLabel.text = "Release Date:"
@@ -48,6 +51,8 @@ final class MovieDetailView: UIView {
 //            genresLabel.textAlignment = .right
         }
     }
+    //MARK: - Stack View
+    //This area fpr create stack view in the screen
     
     private(set) var imageView = UIImageView()
     
@@ -82,6 +87,9 @@ final class MovieDetailView: UIView {
         stackView.axis = .horizontal
         return stackView
     }()
+    
+    //MARK: - Init and Constraints
+    //In this seciton we customize the stackview
     
     override init(frame: CGRect) {
         super.init(frame: frame)

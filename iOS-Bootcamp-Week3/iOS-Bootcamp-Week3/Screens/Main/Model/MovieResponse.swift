@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+//This section for save datas come from api
 struct MovieResponse: Decodable {
     let resultCount: Int?
     let results: [Movie]?

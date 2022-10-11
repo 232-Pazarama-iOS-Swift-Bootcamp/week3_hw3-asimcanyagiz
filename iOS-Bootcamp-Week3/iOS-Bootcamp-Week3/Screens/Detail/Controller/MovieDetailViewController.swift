@@ -8,6 +8,8 @@
 import UIKit
 
 final class MovieDetailViewController: UIViewController {
+    
+    //Core data variable for helps us the check data
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     private var models = [FavoritesItems]()
     var personal = PersonalViewController()
@@ -31,6 +33,7 @@ final class MovieDetailViewController: UIViewController {
         
         //MARK: - Button Favorite
         //Button for add datas to core data
+        //We customize Button here
         let button = UIButton(frame: CGRect(x: 100,y: 700,width: 200,height: 60))
         button.setTitle("Add to Favorites", for: .normal)
         button.setTitleColor(.white, for: .normal)
@@ -39,15 +42,16 @@ final class MovieDetailViewController: UIViewController {
         button.layer.cornerRadius = button.frame.height/2
         self.view.addSubview(button)
         
-        getAllItems()
         
     }
     
+    //Button Action when you clicked button its will be active
     @objc
     func buttonAction() {
-        
+        //Triggers the core data functions
         createItem()
         getAllItems()
+        
         do{
             models = try context.fetch(FavoritesItems.fetchRequest())
             DispatchQueue.main.async {
@@ -60,9 +64,9 @@ final class MovieDetailViewController: UIViewController {
         }
     }
     
-    
     //MARK: - Core Data
     
+    //This functions create item in core data
     func createItem(){
         let newItem = FavoritesItems(context: context)
         newItem.artist = detailView.artistName
@@ -88,6 +92,8 @@ final class MovieDetailViewController: UIViewController {
             
         }
     }
+    
+    //this function call the items in core data
     func getAllItems () {
         
         do {
@@ -97,11 +103,13 @@ final class MovieDetailViewController: UIViewController {
             }
         }
         catch {
-            // error
+            let e = error
+            print(e.localizedDescription)
         }
         
     }
     
+    //this function delete the items in core data
     func deleteItem(item: FavoritesItems) {
         context.delete(item)
         
@@ -110,10 +118,12 @@ final class MovieDetailViewController: UIViewController {
             getAllItems()
         }
         catch {
-            
+            let e = error
+            print(e.localizedDescription)
         }
     }
     
+    //this function save the items in core data
     func updateItem(item: FavoritesItems, newName: String) {
         item.track = newName
         

@@ -8,6 +8,9 @@
 import UIKit
 
 final class MovieCollectionViewCell: UICollectionViewCell {
+    //MARK: - Variables
+    //Creating variables for main movie screen
+    
     var image: UIImage? {
         didSet {
             imageView.image = image
@@ -43,7 +46,7 @@ final class MovieCollectionViewCell: UICollectionViewCell {
         label.numberOfLines = .zero
         return label
     }()
-    
+    //MARK: - Init and Customize the screen
     override init(frame: CGRect) {
         super.init(frame: frame)
         

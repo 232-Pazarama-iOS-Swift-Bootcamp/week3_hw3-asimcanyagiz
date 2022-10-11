@@ -8,8 +8,10 @@
 import UIKit
 
 class PersonalViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-
+    
+    //Core data variable for helps us the check data
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    private var models = [FavoritesItems]()
     
     let tableView: UITableView = {
         let table = UITableView()
@@ -24,12 +26,15 @@ class PersonalViewController: UIViewController, UITableViewDelegate, UITableView
         title = "Favorites"
         getAllItems()
         
+        //We add and delegtade table view to screen
         view.addSubview(tableView)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.frame = view.bounds
         
     }
+    
+    //This function when you check another tab and come back the this tab will be active like viewDidLoad
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -42,11 +47,13 @@ class PersonalViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.frame = view.bounds
     }
     
-    private var models = [FavoritesItems]()
     
+    //This function calculate the count of models and return Int
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return models.count
     }
+    
+    //This function create cell for rows
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let model = models[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
@@ -54,11 +61,13 @@ class PersonalViewController: UIViewController, UITableViewDelegate, UITableView
         return cell
     }
     
+    //This function triggerd methods for selected row
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
         let item = models[indexPath.row]
         
+        //Sheet variable and actions weill help us to tregger alert screen and guide the user modified favorites
         let sheet = UIAlertController(title: nil,
                                       message: nil,
                                       preferredStyle: .actionSheet)
@@ -66,6 +75,7 @@ class PersonalViewController: UIViewController, UITableViewDelegate, UITableView
         sheet.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         sheet.addAction(UIAlertAction(title: "Edit", style: .default, handler: { _ in
             
+            //Alert for sheet
             let alert = UIAlertController(title: "Edit Item",
                                           message: "Edit Your item",
                                           preferredStyle: .alert)
@@ -92,6 +102,7 @@ class PersonalViewController: UIViewController, UITableViewDelegate, UITableView
     
     //MARK: - Core Data
 
+    //this function call the items in core data
     func getAllItems () {
         
         do {
@@ -106,6 +117,7 @@ class PersonalViewController: UIViewController, UITableViewDelegate, UITableView
         
     }
     
+    //This functions create item in core data
     func createItem(name: String){
         let newItem = FavoritesItems(context: context)
         newItem.track = name
@@ -119,6 +131,7 @@ class PersonalViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
+    //this function delete the items in core data
     func deleteItem(item: FavoritesItems) {
         context.delete(item)
         
@@ -131,6 +144,7 @@ class PersonalViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
+    //this function save the items in core data
     func updateItem(item: FavoritesItems, newName: String) {
         item.track = newName
         

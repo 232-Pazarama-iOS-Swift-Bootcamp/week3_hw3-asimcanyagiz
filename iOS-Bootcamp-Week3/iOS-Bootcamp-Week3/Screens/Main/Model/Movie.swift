@@ -6,6 +6,7 @@
 //
 
 import Foundation
+//This section for save datas come from api
 
 struct Movie: Decodable {
     let artistName: String?
